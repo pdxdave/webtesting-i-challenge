@@ -24,14 +24,31 @@ module.exports = {
 };
 
 function succeed(item) {
+  if(item.enhancement === 20){
+    item.enhancement = 20;      // I know I could have skipped this line. I use it for clarity
+  } else {
+    item.enhancement += 1;
+  }
   return { ...item };
 }
 
 function fail(item) {
+  // This line is to avoid a negative number. If durability is less than five, durability is set to 0
+  if(item.enhancement < 15 && item.durability < 5){
+    item.durability = 0;
+  } else if (item.enhancement < 15){
+    item.durability -= 5;
+  } else if (item.enhancement === 15 || item.enhancement === 16){
+    item.durability -= 10;
+  } else if (item.enhancement > 16){
+    item.enhancement += 1;
+  }
   return { ...item };
 }
 
+// Repair sets durabiity back to 100 
 function repair(item) {
+  item.durability = 100;
   return { ...item };
 }
 
